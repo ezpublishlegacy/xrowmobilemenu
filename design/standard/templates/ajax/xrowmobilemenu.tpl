@@ -72,6 +72,9 @@
                     {undef $children_count}
                 {/if}
             {/foreach}
+            {if $node_id|is_numeric()|not()}
+                <li class="closemenu"><span>{'close menu'|i18n("extension/hannover/wifoe")}</span></li>
+            {/if}
         </ul>
     {if $node_id|is_numeric()|not()}
         </div>

@@ -61,6 +61,15 @@ function mobileMenuGetChildren(object)
                     });
                 });
             }
+            $(".closemenu").on('click', function(){
+                $(".xrow-mobile-menu-layer").fadeOut("slow");
+                $(".xrow-mobile-menu").animate({
+                    left: "-" + $(".xrow-mobile-menu").outerWidth() + "px"
+                    }, 200);
+                $("body").css({
+                    overflow: "auto"
+                });
+            });
             $(".xrow-mobile-menu span").click(function(){
                 var clicked = $(this);
                 $(".xrow-mobile-menu > ul").animate({
