@@ -16,6 +16,7 @@ $thisUrl = '/xrowmobilemenu/view';
 
 $tpl->setVariable( 'baseurl', $thisUrl );
 $tpl->setVariable( 'node_id', $Params[Parameters][0] );
+$tpl->setVariable( 'current_node_id', $Params[Parameters][1] );
 
 $Result = array();
 $Result['pagelayout'] = 'ajax/xrowmobilemenu.tpl';

@@ -1,7 +1,13 @@
 $(document).ready(function(){
     if( $(".toggle_xrow_mobile_menu").length )
     {
-        mobileMenuGetChildren(false);
+        if ( $(".toggle_xrow_mobile_menu[data-current_node]").length ) {
+            var current_node_id = $(".toggle_xrow_mobile_menu").data("current_node");
+        }
+        else {
+            var current_node_id = false;
+        }
+        mobileMenuGetChildren(false, current_node_id);
 
         $("body").append('<div class="xrow-mobile-menu-layer"></div>');
 
@@ -26,11 +32,11 @@ $(document).ready(function(){
     }
 });
 
-function mobileMenuGetChildren(object)
+function mobileMenuGetChildren(object, current_node_id)
 {
     if (object == false)
     {
-        var menu_url = "";
+        var menu_url = false;
     }
     else
     {
@@ -42,13 +48,13 @@ function mobileMenuGetChildren(object)
 
     if( $(object).find("ul").length == false )
     {
-        $.get($.ez.root_url + 'xrowmobilemenu/view/' + menu_url, {}, function(data){
+        $.get($.ez.root_url + 'xrowmobilemenu/view/' + menu_url + "/" + current_node_id, {}, function(data){
             if (object == false)
             {
                 $("body").append(data);
                 $(".xrow-mobile-menu").find(".children").each(function(){
                     $(this).one("mouseenter", function(){
-                        mobileMenuGetChildren($(this));
+                        mobileMenuGetChildren($(this), current_node_id);
                     });
                 });
             }
@@ -57,7 +63,7 @@ function mobileMenuGetChildren(object)
                 $(object).append(data);
                 $(object).find(".children").each(function(){
                     $(this).one("mouseenter", function(){
-                        mobileMenuGetChildren($(this));
+                        mobileMenuGetChildren($(this), current_node_id);
                     });
                 });
             }
