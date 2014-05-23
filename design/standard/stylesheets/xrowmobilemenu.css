@@ -1,10 +1,10 @@
 @font-face {
     font-family: 'xrow-mobile-menu';
-    src:url('./extension/xrowmobilemenu/design/standard/stylesheets/fonts/xrow-mobile-menu.eot?-urdnjt');
-    src:url('./extension/xrowmobilemenu/design/standard/stylesheets/fonts/xrow-mobile-menu.eot?#iefix-urdnjt') format('embedded-opentype'),
-        url('./extension/xrowmobilemenu/design/standard/stylesheets/fonts/xrow-mobile-menu.woff?-urdnjt') format('woff'),
-        url('./extension/xrowmobilemenu/design/standard/stylesheets/fonts/xrow-mobile-menu.ttf?-urdnjt') format('truetype'),
-        url('./extension/xrowmobilemenu/design/standard/stylesheets/fonts/xrow-mobile-menu.svg?-urdnjt#xrow-mobile-menu') format('svg');
+    src:url('/extension/xrowmobilemenu/design/standard/stylesheets/fonts/xrow-mobile-menu.eot?-urdnjt');
+    src:url('/extension/xrowmobilemenu/design/standard/stylesheets/fonts/xrow-mobile-menu.eot?#iefix-urdnjt') format('embedded-opentype'),
+        url('/extension/xrowmobilemenu/design/standard/stylesheets/fonts/xrow-mobile-menu.woff?-urdnjt') format('woff'),
+        url('/extension/xrowmobilemenu/design/standard/stylesheets/fonts/xrow-mobile-menu.ttf?-urdnjt') format('truetype'),
+        url('/extension/xrowmobilemenu/design/standard/stylesheets/fonts/xrow-mobile-menu.svg?-urdnjt#xrow-mobile-menu') format('svg');
     font-weight: normal;
     font-style: normal;
 }
