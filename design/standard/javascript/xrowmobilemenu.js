@@ -1,13 +1,24 @@
 $(document).ready(function(){
     if( $(".toggle_xrow_mobile_menu").length )
     {
-        if ( $(".toggle_xrow_mobile_menu[data-current_node]").length ) {
+        if ( $(".toggle_xrow_mobile_menu[data-current_node]").length )
+        {
             var current_node_id = $(".toggle_xrow_mobile_menu").data("current_node");
         }
-        else {
+        else
+        {
             var current_node_id = false;
         }
-        mobileMenuGetChildren(false, current_node_id);
+        if ( $(".toggle_xrow_mobile_menu[data-root_node]").length )
+        {
+            var root_node_id = $(".toggle_xrow_mobile_menu").data("root_node");
+        }
+        else
+        {
+            var root_node_id = false;
+        }
+        
+        mobileMenuGetChildren(false, current_node_id, root_node_id, root_node_id);
 
         $("body").append('<div class="xrow-mobile-menu-layer"></div>');
 
@@ -32,7 +43,7 @@ $(document).ready(function(){
     }
 });
 
-function mobileMenuGetChildren(object, current_node_id)
+function mobileMenuGetChildren(object, current_node_id, root_node_id)
 {
     if (object == false)
     {
@@ -48,13 +59,13 @@ function mobileMenuGetChildren(object, current_node_id)
 
     if( $(object).find("ul").length == false )
     {
-        $.get($.ez.root_url + 'xrowmobilemenu/view/' + menu_url + "/" + current_node_id, {}, function(data){
+        $.get($.ez.root_url + 'xrowmobilemenu/view/' + menu_url + "/" + current_node_id + "/" + root_node_id, {}, function(data){
             if (object == false)
             {
                 $("body").append(data);
                 $(".xrow-mobile-menu").find(".children").each(function(){
                     $(this).one("mouseenter", function(){
-                        mobileMenuGetChildren($(this), current_node_id);
+                        mobileMenuGetChildren($(this), current_node_id, root_node_id);
                     });
                 });
             }
@@ -63,7 +74,7 @@ function mobileMenuGetChildren(object, current_node_id)
                 $(object).append(data);
                 $(object).find(".children").each(function(){
                     $(this).one("mouseenter", function(){
-                        mobileMenuGetChildren($(this), current_node_id);
+                        mobileMenuGetChildren($(this), current_node_id, root_node_id);
                     });
                 });
             }

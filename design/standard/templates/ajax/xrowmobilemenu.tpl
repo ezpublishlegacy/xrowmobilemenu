@@ -1,4 +1,4 @@
-{def $root_node = fetch( 'content', 'node', hash( 'node_id', cond($node_id|is_numeric(), $node_id , ezini('NodeSettings', 'RootNode','content.ini') ) ) )
+{def $root_node = fetch( 'content', 'node', hash( 'node_id', cond($node_id|is_numeric(), $node_id , cond($root_node_id|is_numeric(), $root_node_id, ezini('NodeSettings', 'RootNode','content.ini') ) ) ) )
      $content_node = fetch( 'content', 'node', hash( 'node_id', ezini('NodeSettings', 'RootNode','content.ini') ) )
      $current_depth = $root_node.depth|sub($content_node.depth)
      $limit = 50
