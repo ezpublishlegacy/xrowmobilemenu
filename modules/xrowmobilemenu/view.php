@@ -1,6 +1,9 @@
 <?php
 
-require_once( "kernel/common/template.php" );
+header("Access-Control-Allow-Origin: *", true );
+header("Access-Control-Allow-Credentials: true", true );
+header("Access-Control-Allow-Methods: GET, OPTIONS", true );
+header("Access-Control-Expose-Headers: Content-Type", true );
 
 eZDebug::updateSettings(array(
 "debug-enabled" => false,
@@ -9,7 +12,7 @@ eZDebug::updateSettings(array(
 
 $module = $Params['Module'];
 $http = eZHTTPTool::instance();
-$tpl = templateInit();
+$tpl = eZTemplate::factory();
 $viewParameters = array();
 $availableTranslations = eZContentLanguage::fetchList();
 $thisUrl = '/xrowmobilemenu/view';
@@ -23,5 +26,3 @@ $Result = array();
 $Result['pagelayout'] = 'ajax/xrowmobilemenu.tpl';
 $Result['path'] = array( array( 'url' => false,
                                 'text' => "xrowmobilemenu" ) );
-
-?>

@@ -59,50 +59,58 @@ function mobileMenuGetChildren(object, current_node_id, root_node_id)
 
     if( $(object).find("ul").length == false )
     {
-        $.get($.ez.root_url + 'xrowmobilemenu/view/' + menu_url + "/" + current_node_id + "/" + root_node_id, {}, function(data){
-            if (object == false)
-            {
-                $("body").append(data);
-                $(".xrow-mobile-menu").find(".children").each(function(){
-                    $(this).one("mouseenter", function(){
-                        mobileMenuGetChildren($(this), current_node_id, root_node_id);
-                    });
-                });
-            }
-            else
-            {
-                $(object).append(data);
-                $(object).find(".children").each(function(){
-                    $(this).one("mouseenter", function(){
-                        mobileMenuGetChildren($(this), current_node_id, root_node_id);
-                    });
-                });
-            }
-            $(".closemenu").on('click', function(){
-                $(".xrow-mobile-menu-layer").fadeOut("slow");
-                $(".xrow-mobile-menu").animate({
-                    left: "-" + $(".xrow-mobile-menu").outerWidth() + "px"
-                    }, 200);
-                $("body").css({
-                    overflow: "auto"
-                });
-            });
-            $(".xrow-mobile-menu span").click(function(){
-                var clicked = $(this);
-                $(".xrow-mobile-menu > ul").animate({
-                    left: parseInt( -1 * $(clicked).data("depth") * $(".xrow-mobile-menu").outerWidth() ) + "px",
-                }, 100, function(){
-                    if( $(clicked).hasClass("back") )
-                    {
-                        $(clicked).closest("li.depth-" + $(clicked).data("depth")).removeClass("active");
-                    }
-                });
-                if( $(clicked).hasClass("back") == false )
-                {
-                    $(clicked).closest("li").first().addClass("active");
-                }
-            });
-        }, "html");
+    	 $.ajax({
+             url: $.ez.root_url + 'xrowmobilemenu/view/' + menu_url + "/" + current_node_id + "/" + root_node_id,
+             type: "GET",
+             crossDomain: true,
+             success: function (data) {
+                 if (object == false)
+                 {
+                     $("body").append(data);
+                     $(".xrow-mobile-menu").find(".children").each(function(){
+                         $(this).one("mouseenter", function(){
+                             mobileMenuGetChildren($(this), current_node_id, root_node_id);
+                         });
+                     });
+                 }
+                 else
+                 {
+                     $(object).append(data);
+                     $(object).find(".children").each(function(){
+                         $(this).one("mouseenter", function(){
+                             mobileMenuGetChildren($(this), current_node_id, root_node_id);
+                         });
+                     });
+                 }
+                 $(".closemenu").on('click', function(){
+                     $(".xrow-mobile-menu-layer").fadeOut("slow");
+                     $(".xrow-mobile-menu").animate({
+                         left: "-" + $(".xrow-mobile-menu").outerWidth() + "px"
+                         }, 200);
+                     $("body").css({
+                         overflow: "auto"
+                     });
+                 });
+                 $(".xrow-mobile-menu span").click(function(){
+                     var clicked = $(this);
+                     $(".xrow-mobile-menu > ul").animate({
+                         left: parseInt( -1 * $(clicked).data("depth") * $(".xrow-mobile-menu").outerWidth() ) + "px",
+                     }, 100, function(){
+                         if( $(clicked).hasClass("back") )
+                         {
+                             $(clicked).closest("li.depth-" + $(clicked).data("depth")).removeClass("active");
+                         }
+                     });
+                     if( $(clicked).hasClass("back") == false )
+                     {
+                         $(clicked).closest("li").first().addClass("active");
+                     }
+                 });
+             },
+             error: function (xhr, status) {
+                 console.log("error menu");
+             }
+         });
     }
     else
     {
