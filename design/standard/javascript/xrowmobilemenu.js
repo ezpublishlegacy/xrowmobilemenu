@@ -1,49 +1,59 @@
-$(document).ready(function(){
-    if( $(".toggle_xrow_mobile_menu").length )
-    {
-        if ( $(".toggle_xrow_mobile_menu[data-current_node]").length )
-        {
-            var current_node_id = $(".toggle_xrow_mobile_menu").data("current_node");
-        }
-        else
-        {
-            var current_node_id = false;
-        }
-        if ( $(".toggle_xrow_mobile_menu[data-root_node]").length )
-        {
-            var root_node_id = $(".toggle_xrow_mobile_menu").data("root_node");
-        }
-        else
-        {
-            var root_node_id = false;
-        }
-        
-        mobileMenuGetChildren(false, current_node_id, root_node_id, root_node_id);
-
-        $("body").append('<div class="xrow-mobile-menu-layer"></div>');
-
-        $(".toggle_xrow_mobile_menu").on('click', function(){
-            $(".xrow-mobile-menu-layer").fadeIn("slow");
-            $(".xrow-mobile-menu").animate({left: "0px"}, 200);
-            //window.scrollTo(0, 0);
-            $("body").css({
-                overflow: "hidden"
+(function ( $ ) {
+    jQuery.fn.xrowmobilemenu = function( options ) {
+        return this.each(function() {
+            var toggle = $(this);
+            var settings = $.extend({
+                current_node_id: false,
+                root_node_id: false,
+                focus_current_node: false
+                }, options );
+            if ( toggle.is("[data-current_node]") )
+            {
+                settings.current_node_id = toggle.data("current_node");
+            }
+            if ( toggle.is("[data-root_node]") )
+            {
+                settings.root_node_id = toggle.data("root_node");
+            }
+            if ( toggle.is("[data-focus_current_node]") )
+            {
+                settings.focus_current_node = toggle.data("focus_current_node");
+            }
+            
+            mobileMenuGetChildren(false, settings.current_node_id, settings.root_node_id, settings.focus_current_node);
+            
+            $("body").append('<div class="xrow-mobile-menu-layer"></div>');
+            toggle.on('click', function(){
+                $(".xrow-mobile-menu-layer").fadeIn("slow");
+                $(".xrow-mobile-menu").animate({left: "0px"}, 200);
+                //window.scrollTo(0, 0);
+                $("body").css({
+                    overflow: "hidden"
+                });
             });
-        });
 
-        $(".xrow-mobile-menu-layer").on('click', function(){
-            $(this).fadeOut("slow");
-            $(".xrow-mobile-menu").animate({
-                left: "-" + $(".xrow-mobile-menu").outerWidth() + "px"
-                }, 200);
-            $("body").css({
-                overflow: "auto"
+            $(".xrow-mobile-menu-layer").on('click', function(){
+                $(this).fadeOut("slow");
+                $(".xrow-mobile-menu").animate({
+                    left: "-" + $(".xrow-mobile-menu").outerWidth() + "px"
+                    }, 200);
+                $("body").css({
+                    overflow: "auto"
+                });
             });
         });
     }
+}( jQuery ));
+
+//this block is for backwards compatibility
+$(document).ready(function(){
+    if( $(".toggle_xrow_mobile_menu").length )
+    {
+        $(".toggle_xrow_mobile_menu").xrowmobilemenu();
+    }
 });
 
-function mobileMenuGetChildren(object, current_node_id, root_node_id)
+function mobileMenuGetChildren(object, current_node_id, root_node_id, focus_current_node)
 {
     if (object == false)
     {
@@ -59,8 +69,8 @@ function mobileMenuGetChildren(object, current_node_id, root_node_id)
 
     if( $(object).find("ul").length == false )
     {
-    	 $.ajax({
-             url: $.ez.root_url + 'xrowmobilemenu/view/' + menu_url + "/" + current_node_id + "/" + root_node_id,
+         $.ajax({
+             url: $.ez.root_url + 'xrowmobilemenu/view/' + menu_url + "/" + current_node_id + "/" + root_node_id + "/" + focus_current_node,
              type: "GET",
              crossDomain: true,
              success: function (data) {
@@ -69,7 +79,7 @@ function mobileMenuGetChildren(object, current_node_id, root_node_id)
                      $("body").append(data);
                      $(".xrow-mobile-menu").find(".children").each(function(){
                          $(this).one("mouseenter", function(){
-                             mobileMenuGetChildren($(this), current_node_id, root_node_id);
+                             mobileMenuGetChildren($(this), current_node_id, root_node_id, false);
                          });
                      });
                  }
@@ -78,8 +88,15 @@ function mobileMenuGetChildren(object, current_node_id, root_node_id)
                      $(object).append(data);
                      $(object).find(".children").each(function(){
                          $(this).one("mouseenter", function(){
-                             mobileMenuGetChildren($(this), current_node_id, root_node_id);
+                             mobileMenuGetChildren($(this), current_node_id, root_node_id, false);
                          });
+                     });
+                 }
+                 if( focus_current_node == true && $(".xrow-mobile-menu .active").length )
+                 {
+                     var count_active = $(".xrow-mobile-menu .active").length;
+                     $(".xrow-mobile-menu > ul").css({
+                         left: parseInt( -1 * count_active * $(".xrow-mobile-menu").outerWidth() ) + "px"
                      });
                  }
                  $(".closemenu").on('click', function(){
@@ -114,17 +131,12 @@ function mobileMenuGetChildren(object, current_node_id, root_node_id)
     }
     else
     {
-        $(".xrow-mobile-menu > ul").animate({
-            left: parseInt( -1 * $(clicked).data("depth") * $(".xrow-mobile-menu").outerWidth() ) + "px",
-        }, 100, function(){
-            if( $(clicked).hasClass("back") )
-            {
-                $(clicked).closest("li.depth-" + $(clicked).data("depth")).removeClass("active");
-            }
+        $(".xrow-mobile-menu span").click(function(){
+            var depth = $(this).data("depth");
+            $(".xrow-mobile-menu > ul").animate({
+                left: parseInt( -1 * depth * $(".xrow-mobile-menu").outerWidth() ) + "px",
+            }, 100);
+            window.console.log(parseInt( -1 * depth * $(".xrow-mobile-menu").outerWidth() ));
         });
-        if( $(clicked).hasClass("back") == false )
-        {
-            $(clicked).closest("li").first().addClass("active");
-        }
     }
 }

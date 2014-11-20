@@ -21,6 +21,7 @@ $tpl->setVariable( 'baseurl', $thisUrl );
 $tpl->setVariable( 'node_id', $Params[Parameters][0] );
 $tpl->setVariable( 'current_node_id', $Params[Parameters][1] );
 $tpl->setVariable( 'root_node_id', $Params[Parameters][2] );
+$tpl->setVariable( 'focus_current_node', $Params[Parameters][3] );
 
 $Result = array();
 $Result['pagelayout'] = 'ajax/xrowmobilemenu.tpl';

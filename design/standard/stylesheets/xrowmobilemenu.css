@@ -54,10 +54,12 @@
 
 .xrow-mobile-menu ul {
     background-color: #fff;
+    left: 0;
+    list-style-type: none;
     margin: 0;
+    padding-left: 0;
     position: absolute;
     top: 0;
-    left: 0;
     width: 100%;
 }
 
