@@ -18,11 +18,10 @@ Steps to set up xrowmobilemenu:
   ActiveAccessExtensions[]=xrowmobilemenu
 3. Add xrowmobilemenu.js and xrowmobilemenu.css to your design.ini
 4. Activate jQuery.
-5. Clear caches.
-6. Add one HTML-Tag of your desire with a proper class or an ID as Trigger for opening/closing the menu.
+5. Add one HTML-Tag of your desire with a proper class or an ID as Trigger for opening/closing the menu.
   <button class="example"></button>
-7. Set up the Trigger in JS: $("button.example").xrowmobilemenu();
-8. Optionally you can configure what the menu should do:
+6. Set up the Trigger in JS: $("button.example").xrowmobilemenu();
+7. Optionally you can configure what the menu should do:
   a.
     I recommend, that you use data-Attributes in your HTML-Trigger to pass the variables to JS
     <button class="example" data-current_node={$current_node_id}></button>
@@ -30,6 +29,7 @@ Steps to set up xrowmobilemenu:
     $("button.example").xrowmobilemenu({current_node_id: $("button.example").data("current_node")});
   c.
     More Possibilities:
+8. Clear caches.
     
     $("button.example").xrowmobilemenu({
       current_node_id: <add the current node id like in b. - this is recommended>,
