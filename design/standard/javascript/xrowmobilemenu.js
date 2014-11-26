@@ -95,6 +95,7 @@ function mobileMenuGetChildren(object, current_node_id, root_node_id, focus_curr
                  if( focus_current_node == true && $(".xrow-mobile-menu .active").length )
                  {
                      var count_active = $(".xrow-mobile-menu .active").length;
+                     window.console.log(count_active + " count active");
                      $(".xrow-mobile-menu > ul").css({
                          left: parseInt( -1 * count_active * $(".xrow-mobile-menu").outerWidth() ) + "px"
                      });
@@ -136,7 +137,6 @@ function mobileMenuGetChildren(object, current_node_id, root_node_id, focus_curr
             $(".xrow-mobile-menu > ul").animate({
                 left: parseInt( -1 * depth * $(".xrow-mobile-menu").outerWidth() ) + "px",
             }, 100);
-            window.console.log(parseInt( -1 * depth * $(".xrow-mobile-menu").outerWidth() ));
         });
     }
 }

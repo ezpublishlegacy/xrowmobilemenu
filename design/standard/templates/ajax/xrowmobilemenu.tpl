@@ -56,6 +56,27 @@
                     {if $children_count|gt(0)}
                         {set $item_class = $item_class|append("children")|append(concat("depth-", $current_depth))}
                     {/if}
+                    {if and($node_id|is_numeric()|not(), $focus_current_node|eq('true'))}
+                        {def $path = fetch('content', 'node', hash('node_id', $current_node_id)).path_string|explode("/")
+                             $path_nodes = array()}
+                        {if $path|contains($item.node_id)}
+                            {foreach $path as $path_node_id}
+                                {if $root_node.path_string|explode("/")|contains($path_node_id)|not()}
+                                    {def $tmp_node = fetch('content', 'node', hash('node_id', $path_node_id))}
+                                    {if $sub_menu_class_filter|contains($tmp_node.class_identifier)}
+                                        {set $path_nodes = $path_nodes|append($tmp_node)}
+                                    {else}
+                                        {break}
+                                    {/if}
+                                    {undef $tmp_node}
+                                {/if}
+                            {/foreach}
+                            {def $path_nodes_count = $path_nodes|count()}
+                            {if $path_nodes_count|gt(0)}
+                                {set $item_class = $item_class|append("active")}
+                            {/if}
+                        {/if}
+                    {/if}
                     <li{if $item_class} class="{$item_class|implode(" ")}"{/if}{if $children_count|gt(0)} data-nodeid="{$item.node_id}"{/if}>
                         {if $children_count|le(0)}
                             <a href={$item.url_alias|ezurl}>
@@ -68,13 +89,75 @@
                         {else}
                             </span>
                         {/if}
+                        {if and($path_nodes_count|gt(0), $path|contains($item.node_id))}
+                            {def $current_path = array()}
+                            {foreach $path_nodes as $tmp_item}
+                                {def $hash = hash( 'text', $tmp_item.name|wash(),
+                                                   'url', concat('/content/view/full/', $tmp_item.node_id),
+                                                   'url_alias', $tmp_item.url_alias,
+                                                   'node_id', $tmp_item.node_id )}
+                                {set $current_path = $current_path|append($hash)}
+                                {undef $hash}
+                            {/foreach}
+                            {def $docs=treemenu( $current_path, null(), $sub_menu_class_filter, 0, 20, 'tree', '10' )
+                                 $depth=0}
+                                {if $docs|count|gt(0)}
+                                    <ul>
+                                        <li>
+                                            <span class="back" data-depth="0">
+                                                {"back"|i18n("extension/xrowmobilemenu")}
+                                            </span>
+                                        </li>
+                                        <li>
+                                            <a class="current" href={$root_node.url_alias|ezurl}>
+                                                {$item.name|wash()}
+                                            </a>
+                                        </li>
+                                        {foreach $docs as $key => $menu}
+                                            {if and( is_set( $menu.node.data_map.hide ), $menu.node.data_map.hide.content )}{skip}{/if}
+                                            {if $depth|ne( $menu.level )}
+                                                {if $depth|gt( $menu.level )}
+                                                    {* closing menu *}
+                                                    {concat('<li class="closemenu"><span>','close menu'|i18n("extension/hannover/wifoe"),'</span></li></ul>')|repeat(sub($depth,$menu.level))}
+                                                {else}
+                                                    {* add menu *}
+                                                    <ul>
+                                                        <li>
+                                                            <span class="back" data-depth="{$menu.level}">
+                                                                {"back"|i18n("extension/xrowmobilemenu")}
+                                                            </span>
+                                                        </li>
+                                                        <li>
+                                                            <a class="current" href={$menu.node.parent.url_alias|ezurl}>
+                                                                {$menu.node.parent.name|wash()}
+                                                            </a>
+                                                        </li>
+                                                {/if}
+                                            {/if}
+                                            <li {if $menu.has_children}data-nodeid="{$menu.id}" {/if}class="depth-{$menu.level|inc}{if and($path_nodes_count|dec|ne($menu.level|inc), $menu.is_selected)} active{/if}{if and($path_nodes_count|dec|eq($menu.level|inc), $menu.is_selected)} selected{/if}{if $menu.has_children} children{/if}">
+                                                {if $menu.has_children}
+                                                    <span data-depth="{$menu.level|sum(2)}">
+                                                        {$menu.text|wash}
+                                                    </span>
+                                                {else}
+                                                    <a href={$menu.url_alias|ezurl} title="{$menu.text|wash}">
+                                                        {$menu.text|wash}
+                                                    </a>
+                                                {/if}
+                                            {set $depth=$menu.level}
+                                        {/foreach}
+                                        {if $depth|ne(0)}
+                                            {'</li><li class="closemenu"><span>{'close menu'|i18n("extension/hannover/wifoe")}</span></li></ul>'|repeat($depth)}
+                                        {/if}
+                                    </ul>
+                                {/if}
+                            {undef $docs $depth $current_path}
+                        {/if}
                     </li>
                     {undef $children_count}
                 {/if}
             {/foreach}
-            {if $node_id|is_numeric()|not()}
-                <li class="closemenu"><span>{'close menu'|i18n("extension/hannover/wifoe")}</span></li>
-            {/if}
+            <li class="closemenu"><span>{'close menu'|i18n("extension/hannover/wifoe")}</span></li>
         </ul>
     {if $node_id|is_numeric()|not()}
         </div>
