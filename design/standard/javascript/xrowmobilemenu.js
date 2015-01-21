@@ -27,8 +27,14 @@
                 $(".xrow-mobile-menu-layer").fadeIn("slow");
                 $(".xrow-mobile-menu").animate({left: "0px"}, 200);
                 //window.scrollTo(0, 0);
+                /*disable background overscroll*/
+                $(document).bind('touchmove', function(e){
+                    if(!$('.xrow-mobile-menu').has($(e.target)).length)
+                        e.preventDefault();
+                });
                 $("body").css({
-                    overflow: "hidden"
+                    overflow: "hidden",
+                    position: "fixed"
                 });
             });
 
@@ -37,8 +43,10 @@
                 $(".xrow-mobile-menu").animate({
                     left: "-" + $(".xrow-mobile-menu").outerWidth() + "px"
                     }, 200);
+                $(document).unbind('touchmove');
                 $("body").css({
-                    overflow: "auto"
+                    overflow: "auto",
+                    position: ""
                 });
             });
         });
@@ -105,8 +113,10 @@ function mobileMenuGetChildren(object, current_node_id, root_node_id, focus_curr
                      $(".xrow-mobile-menu").animate({
                          left: "-" + $(".xrow-mobile-menu").outerWidth() + "px"
                          }, 200);
+                     $(document).unbind('touchmove');
                      $("body").css({
-                         overflow: "auto"
+                         overflow: "auto",
+                         position: ""
                      });
                  });
                  $(".xrow-mobile-menu span").click(function(){
