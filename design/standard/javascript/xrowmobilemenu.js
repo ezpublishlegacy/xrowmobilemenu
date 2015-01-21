@@ -35,7 +35,7 @@
                 $("body").css({
                     overflow: "hidden",
                     position: "fixed",
-                    width:100%
+                    width: "100%"
                 });
             });
 
