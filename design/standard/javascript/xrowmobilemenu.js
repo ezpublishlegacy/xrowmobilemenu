@@ -34,7 +34,8 @@
                 });
                 $("body").css({
                     overflow: "hidden",
-                    position: "fixed"
+                    position: "fixed",
+                    width:100%
                 });
             });
 
@@ -46,7 +47,8 @@
                 $(document).unbind('touchmove');
                 $("body").css({
                     overflow: "auto",
-                    position: ""
+                    position: "",
+                    width:""
                 });
             });
         });
@@ -116,7 +118,8 @@ function mobileMenuGetChildren(object, current_node_id, root_node_id, focus_curr
                      $(document).unbind('touchmove');
                      $("body").css({
                          overflow: "auto",
-                         position: ""
+                         position: "",
+                         width: ""
                      });
                  });
                  $(".xrow-mobile-menu span").click(function(){
