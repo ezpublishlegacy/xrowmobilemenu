@@ -52,6 +52,20 @@
     overflow-x: hidden;
 }
 
+/* iPhone size */
+@media only screen and (max-width : 320px)
+{
+    .xrow-mobile-menu
+    {
+        width: 280px;
+        left: -280px;
+    }
+    .xrow-mobile-menu ul ul
+    {
+        left: 280px;
+    }
+}
+
 .xrow-mobile-menu ul {
     background-color: #fff;
     left: 0;
