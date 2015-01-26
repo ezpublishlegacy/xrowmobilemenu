@@ -56,7 +56,7 @@
 
 @media only screen and (max-width : 320px)
 {
-    .xrow-mobile-menu
+    body .xrow-mobile-menu
     {
         width: 280px;
         left: -280px;
