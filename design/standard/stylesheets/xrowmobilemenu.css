@@ -53,6 +53,7 @@
 }
 
 /* iPhone size */
+/*
 @media only screen and (max-width : 320px)
 {
     .xrow-mobile-menu
@@ -65,7 +66,7 @@
         left: 280px;
     }
 }
-
+*/
 .xrow-mobile-menu ul {
     background-color: #fff;
     left: 0;
