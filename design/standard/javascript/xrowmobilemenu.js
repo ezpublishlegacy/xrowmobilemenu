@@ -62,7 +62,17 @@ $(document).ready(function(){
         $(".toggle_xrow_mobile_menu").xrowmobilemenu();
     }
 });
-
+$( window ).resize(function() {
+    if( $(".xrow-mobile-menu").length )
+    {
+        var count_active = $(".xrow-mobile-menu .active").length;
+        $(".xrow-mobile-menu ul:first").css({ left: parseInt( -1 * count_active * $(".xrow-mobile-menu").outerWidth() ) + "px" });
+        if( $(".xrow-mobile-menu").css("left") != "0px" )
+        {
+            $(".xrow-mobile-menu").css({left: "-" + $(".xrow-mobile-menu").outerWidth() + "px" });
+        }
+    }
+});
 function mobileMenuGetChildren(object, current_node_id, root_node_id, focus_current_node)
 {
     if (object == false)
