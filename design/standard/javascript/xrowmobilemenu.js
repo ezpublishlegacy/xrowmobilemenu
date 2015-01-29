@@ -115,7 +115,7 @@ function mobileMenuGetChildren(object, current_node_id, root_node_id, focus_curr
                  if( focus_current_node == true && $(".xrow-mobile-menu .active").length )
                  {
                      var count_active = $(".xrow-mobile-menu .active").length;
-                     window.console.log(count_active + " count active");
+                     //window.console.log(count_active + " count active");
                      $(".xrow-mobile-menu > ul").css({
                          left: parseInt( -1 * count_active * $(".xrow-mobile-menu").outerWidth() ) + "px"
                      });
@@ -135,7 +135,7 @@ function mobileMenuGetChildren(object, current_node_id, root_node_id, focus_curr
                  $(".xrow-mobile-menu span").click(function(){
                      var clicked = $(this);
                      $(".xrow-mobile-menu > ul").animate({
-                         left: parseInt( -1 * $(clicked).data("depth") * $(".xrow-mobile-menu").outerWidth() ) + "px",
+                         left: parseInt( -1 * $(clicked).data("depth") * $(".xrow-mobile-menu").outerWidth() ) + "px"
                      }, 100, function(){
                          if( $(clicked).hasClass("back") )
                          {
@@ -149,7 +149,7 @@ function mobileMenuGetChildren(object, current_node_id, root_node_id, focus_curr
                  });
              },
              error: function (xhr, status) {
-                 console.log("error menu");
+                 //console.log("error menu");
              }
          });
     }
