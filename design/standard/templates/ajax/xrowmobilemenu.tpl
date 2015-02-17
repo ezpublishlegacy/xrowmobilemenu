@@ -147,7 +147,7 @@
                                             {set $depth=$menu.level}
                                         {/foreach}
                                         {if $depth|ne(0)}
-                                            {'</li><li class="closemenu"><span>{'close menu'|i18n("extension/hannover/wifoe")}</span></li></ul>'|repeat($depth)}
+                                            {concat('</li><li class="closemenu"><span>','close menu'|i18n("extension/wifoe"),'</span></li></ul>')|repeat($depth)}
                                         {/if}
                                     </ul>
                                 {/if}
