@@ -1,6 +1,6 @@
 {
     "name": "xrow/xrowmobilemenu-ls",
-    "description": "Event extension for eZ Publish",
+    "description": "Menu extension for eZ Publish",
     "type": "ezpublish-legacy-extension",
     "license": "GPL-2.0",
     "authors": [
