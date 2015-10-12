@@ -72,8 +72,10 @@
                                 {/if}
                             {/foreach}
                             {def $path_nodes_count = $path_nodes|count()}
-                            {if $path_nodes_count|gt(0)}
+                            {if and($path_nodes_count|gt(0), $children_count|gt(0))}
                                 {set $item_class = $item_class|append("active")}
+                            {elseif and($item.node_id|eq( $current_node_id ), $path_nodes_count|gt(0), $children_count|eq(0))}
+                                {set $item_class = $item_class|append("selected")}
                             {/if}
                         {/if}
                     {/if}
