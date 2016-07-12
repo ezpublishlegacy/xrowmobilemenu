@@ -90,9 +90,9 @@ function mobileMenuGetChildren(object, current_node_id, root_node_id, focus_curr
     if( $(object).find("ul").length == false )
     {
          $.ajax({
-             url: $.ez.root_url + 'xrowmobilemenu/view/' + menu_url + "/" + current_node_id + "/" + root_node_id + "/" + focus_current_node,
+             url: '/xrowmobilemenu/view/' + menu_url + "/" + current_node_id + "/" + root_node_id + "/" + focus_current_node,
              type: "GET",
-             crossDomain: true,
+             crossDomain: false,
              success: function (data) {
                  if (object == false)
                  {
