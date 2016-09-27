@@ -1,3 +1,8 @@
+{if and(is_set($siteaccessname), or($siteaccessname|eq(''), $siteaccessname|eq('false'), $siteaccessname|eq('0'))|not() )}
+    {set $siteaccessname = ""}
+{elseif is_set($siteaccessname)|not()}
+    {def $siteaccessname = ""}
+{/if}
 {def $root_node = fetch( 'content', 'node', hash( 'node_id', cond($node_id|is_numeric(), $node_id , cond($root_node_id|is_numeric(), $root_node_id, ezini('NodeSettings', 'RootNode','content.ini') ) ) ) )
      $content_node = fetch( 'content', 'node', hash( 'node_id', ezini('NodeSettings', 'RootNode','content.ini') ) )
      $current_depth = $root_node.depth|sub($content_node.depth)

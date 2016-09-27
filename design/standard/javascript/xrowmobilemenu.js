@@ -5,7 +5,8 @@
             var settings = $.extend({
                 current_node_id: false,
                 root_node_id: false,
-                focus_current_node: false
+                focus_current_node: false,
+                siteaccessname: false
                 }, options );
             if ( toggle.is("[data-current_node]") )
             {
@@ -19,9 +20,11 @@
             {
                 settings.focus_current_node = toggle.data("focus_current_node");
             }
-            
-            mobileMenuGetChildren(false, settings.current_node_id, settings.root_node_id, settings.focus_current_node);
-            
+            if ( toggle.is("[data-siteaccessname]") )
+            {
+                settings.siteaccessname = toggle.data("siteaccessname");
+            }
+            mobileMenuGetChildren(false, settings.current_node_id, settings.root_node_id, settings.focus_current_node, settings.siteaccessname);
             $("body").append('<div class="xrow-mobile-menu-layer"></div>');
             toggle.on('click', function(){
                 $(".xrow-mobile-menu-layer").fadeIn("slow");
@@ -73,8 +76,11 @@ $( window ).resize(function() {
         }
     }
 });
-function mobileMenuGetChildren(object, current_node_id, root_node_id, focus_current_node)
+function mobileMenuGetChildren(object, current_node_id, root_node_id, focus_current_node, siteaccessname)
 {
+    if (siteaccessname == false) {
+        siteaccessname = "";
+    }
     if (object == false)
     {
         var menu_url = false;
@@ -90,7 +96,7 @@ function mobileMenuGetChildren(object, current_node_id, root_node_id, focus_curr
     if( $(object).find("ul").length == false )
     {
          $.ajax({
-             url: '/xrowmobilemenu/view/' + menu_url + "/" + current_node_id + "/" + root_node_id + "/" + focus_current_node,
+             url: "//" + siteaccessname + '/xrowmobilemenu/view/' + menu_url + "/" + current_node_id + "/" + root_node_id + "/" + focus_current_node + "/",
              type: "GET",
              crossDomain: false,
              success: function (data) {
@@ -99,7 +105,7 @@ function mobileMenuGetChildren(object, current_node_id, root_node_id, focus_curr
                      $("body").append(data);
                      $(".xrow-mobile-menu").find(".children").each(function(){
                          $(this).one("mouseenter", function(){
-                             mobileMenuGetChildren($(this), current_node_id, root_node_id, false);
+                             mobileMenuGetChildren($(this), current_node_id, root_node_id, false, siteaccessname);
                          });
                      });
                  }
@@ -108,7 +114,7 @@ function mobileMenuGetChildren(object, current_node_id, root_node_id, focus_curr
                      $(object).append(data);
                      $(object).find(".children").each(function(){
                          $(this).one("mouseenter", function(){
-                             mobileMenuGetChildren($(this), current_node_id, root_node_id, false);
+                             mobileMenuGetChildren($(this), current_node_id, root_node_id, false, siteaccessname);
                          });
                      });
                  }

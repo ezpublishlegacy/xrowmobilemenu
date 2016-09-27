@@ -32,6 +32,7 @@ Steps to set up xrowmobilemenu:
     $("button.example").xrowmobilemenu({
       current_node_id: <add the current node id like in b. - this is recommended>,
       focus_current_node: <if the menu should focus on the current node on load, elsewhise it will show the children of the root node>,
-      root_node_id: <by default the root nodeconfigured in your site.ini is used. But for microsites you can set the root node manually>
+      root_node_id: <by default the root nodeconfigured in your site.ini is used. But for microsites you can set the root node manually>,
+      siteaccessname: <your url with siteaccess e.g. example.com/eng_gb>
     });
 8. Clear caches.
