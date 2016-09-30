@@ -98,7 +98,7 @@ function mobileMenuGetChildren(object, current_node_id, root_node_id, focus_curr
          $.ajax({
              url: "//" + siteaccessname + '/xrowmobilemenu/view/' + menu_url + "/" + current_node_id + "/" + root_node_id + "/" + focus_current_node + "/",
              type: "GET",
-             crossDomain: false,
+             crossDomain: true,
              success: function (data) {
                  if (object == false)
                  {
